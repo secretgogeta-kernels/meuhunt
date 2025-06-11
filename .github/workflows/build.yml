@@ -29,8 +29,8 @@ jobs:
         make
         mv keyhunt meuhunt
 
-    - name: Upload 'meuhunt' Artifact binary
+    - name: Upload 'meuhunt' Artifact
       uses: actions/upload-artifact@v4
       with:
         name: meuhunt
-        path: ./keyhunt/meuhunt
+        path: ./keyhunt/meuhunt/*
