@@ -1,6 +1,13 @@
 name: Build and Release Meuhunt
 
 on:
+  workflow_dispatch:
+    inputs:
+      build:
+        description: 'build?'
+        type: boolean
+        required: false
+        default: true
   release:
     types: [published]
 
