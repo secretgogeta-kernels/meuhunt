@@ -1,0 +1,33 @@
+name: Build and Release Meuhunt
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential libssl-dev libgmp-dev
+
+    - name: Clone Keyhunt
+      run: git clone https://github.com/albertobsd/keyhunt.git
+
+    - name: Compile and Rename to Meuhunt
+      run: |
+        cd keyhunt
+        make
+        mv keyhunt meuhunt
+
+    - name: Upload Meuhunt Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./keyhunt/meuhunt
+        asset_name: meuhunt
+        asset_content_type: application/octet-stream
